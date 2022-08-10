@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 const BlogPost = require('./models/blogPost');
 
-mongoose.connect('mongodb://localhost//my_database', ()=>{
-    console.log('contected :)')
-});
+mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser:true});
 
-
+console.log('mongoose is running :) ')
 
 BlogPost.create({
     title: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. ", 
