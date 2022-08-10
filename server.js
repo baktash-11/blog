@@ -5,7 +5,8 @@ const ejs = require('ejs');
 const app =new express();
 const path = require('path');
 const port = 4000;
-
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser:true});
 
 
 app.use(express.static('public'));
