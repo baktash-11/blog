@@ -29,3 +29,7 @@ User.create({
 }, (error, user)=>{
     console.log(error, user)
 });
+
+User.find({}, (error, user)=>{
+    console.log(error, user)
+});
