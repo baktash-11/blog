@@ -10,10 +10,13 @@ const BlogPost= require('./models/blogPost')
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser:true});
+const fileUpload = require('express-fileupload');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('public'));
+app.use(fileUpload());
+
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res)=>{
@@ -46,10 +49,14 @@ app.get('/posts/new',(req, res)=>{
 //     console.log(req.body);
 //     res.redirect('/');
 // });
-app.post('/post/new', async(req, res)=>{
-    await BlogPost.create(req.body);
-    console.log(req.body);
-    res.redirect('/');
+app.post('/post/new',(req, res)=>{
+    let image = req.files.image;
+    image.mv(path.resolve(__dirname, 'public/img' , image.name), async(error)=>{
+
+        await BlogPost.create({...req.body, image:'/img/'+ image.name});
+        console.log(req.body);
+        res.redirect('/');
+    });
 });
 
 

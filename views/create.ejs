@@ -4,7 +4,7 @@
     <body>
        <!-- nav -->
        <%- include('layouts/navbar'); -%>
-        <header class="masthead" style="background-image: url('../assets/img/contact-bg.jpg')">
+        <header class="masthead" style="background-image: url('../assets/img/post-bg.jpg')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
@@ -24,7 +24,7 @@
                         <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
                         <div class="my-5">
                             
-                            <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="POST" action="/post/new">
+                            <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="POST" action="/post/new" enctype="multipart/form-data">
                                 <div class="form-floating">
                                     <input class="form-control" id="title" type="text" placeholder="Enter your title..." data-sb-validations="required" name="title" />
                                     <label for="name">Title</label>
@@ -35,6 +35,13 @@
                                     <textarea class="form-control" id="body" placeholder="Enter blog's body here..." style="height: 12rem" data-sb-validations="required" name="body"></textarea>
                                     <label for="body">Body</label>
                                     <div class="invalid-feedback" data-sb-feedback="message:required">A text Body is required.</div>
+                                </div>
+                                <br />
+
+                                <div class="form-floating">
+                                    <input type="file" class="form-control" id="image"  style="height:5rem" data-sb-validations="required" name="image"></textarea>
+                                    <label for="image">Image</label>
+                                    
                                 </div>
                                 <br />
                                
