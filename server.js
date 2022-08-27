@@ -1,5 +1,6 @@
 
 
+
 const express = require('express');
 const ejs = require('ejs');
 const app =new express();
@@ -7,6 +8,8 @@ const path = require('path');
 const port = 4000;
 const BlogPost= require('./models/blogPost')
 
+// router
+const routs = require('./routs');
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser:true});
@@ -19,12 +22,21 @@ app.use(fileUpload());
 
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res)=>{
-    // res.sendFile(path.resolve(__dirname, './public/pages/index.html'))
-    res.render('index')
-    console.log(req.url)
-});
-app.get('/about', (req, res)=>{
+// app.use(newfunc);
+
+function newfunc (req, res, next){
+    // console.log(req.url);
+    console.log("this is a middleware function");
+    next();
+}
+
+app.use('/', routs());
+// app.get('/', (req, res)=>{
+//     // res.sendFile(path.resolve(__dirname, './public/pages/index.html'))
+//     res.render('index')
+//     console.log(req.url)
+// });
+app.get('/about', newfunc, (req, res)=>{
     // res.sendFile(path.resolve(__dirname, 'pages/about.html'))
     res.render('about')
 });
@@ -49,7 +61,7 @@ app.get('/posts/new',(req, res)=>{
 //     console.log(req.body);
 //     res.redirect('/');
 // });
-app.post('/post/new',(req, res)=>{
+app.post('/post/new', validationMiddleWare,(req, res)=>{
     let image = req.files.image;
     image.mv(path.resolve(__dirname, 'public/img' , image.name), async(error)=>{
 
@@ -57,9 +69,16 @@ app.post('/post/new',(req, res)=>{
         console.log(req.body);
         res.redirect('/');
     });
+   
 });
 
-
+// adding validation middle ware 
+function validationMiddleWare(req, res , next){
+    if( req.body.title === null || req.files == null ){
+        return res.redirect('/posts/new');
+    }
+    next();
+}
 
 app.get('/hello', (req, res) => res.send('Hello World!'))
 
