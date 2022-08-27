@@ -24,11 +24,7 @@ app.set('view engine', 'ejs');
 
 // app.use(newfunc);
 
-function middleWareFunction (req, res, next){
-    // console.log(req.url);
-    console.log("its all about us nothing else");
-    next();
-}
+
 
 const about = require('./controllers/about');
 const newPostController = require('./controllers/newPost');
@@ -37,9 +33,7 @@ const contact = require('./controllers/contact');
 app.use('/', routs());
 
 
-app.get('/about', middleWareFunction, about);
-app.get('/post', post);
-app.get('/contact', contact);
+
 app.get('/posts/new', newPostController);
 
 
@@ -54,7 +48,7 @@ app.get('/posts/new', newPostController);
 // });
 app.post('/post/new', validationMiddleWare,(req, res)=>{
     let image = req.files.image;
-    image.mv(path.resolve(__dirname, 'public/img' , image.name), async(error)=>{
+    image.mv(path.resolve(__dirname, 'public/img' , image.name='new.jpg'), async(error)=>{
 
         await BlogPost.create({...req.body, image:'/img/'+ image.name});
         console.log(req.body);
