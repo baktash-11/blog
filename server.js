@@ -24,36 +24,27 @@ app.set('view engine', 'ejs');
 
 // app.use(newfunc);
 
-function newfunc (req, res, next){
+function middleWareFunction (req, res, next){
     // console.log(req.url);
-    console.log("this is a middleware function");
+    console.log("its all about us nothing else");
     next();
 }
 
+const about = require('./controllers/about');
+const newPostController = require('./controllers/newPost');
+const post = require('./controllers/posts');
+const contact = require('./controllers/contact');
 app.use('/', routs());
-// app.get('/', (req, res)=>{
-//     // res.sendFile(path.resolve(__dirname, './public/pages/index.html'))
-//     res.render('index')
-//     console.log(req.url)
-// });
-app.get('/about', newfunc, (req, res)=>{
-    // res.sendFile(path.resolve(__dirname, 'pages/about.html'))
-    res.render('about')
-});
-app.get('/contact', (req, res)=>{
-    // res.sendFile(path.resolve(__dirname, 'pages/contact.html'))
-    res.render('contact')
-});
-app.get('/post', (req, res)=>{
-    // res.sendFile(path.resolve(__dirname, 'pages/post.html'))
-    res.render('post')
-});
 
 
-app.get('/posts/new',(req, res)=>{
-    
-    res.render('create')
-});
+app.get('/about', middleWareFunction, about);
+app.get('/post', post);
+app.get('/contact', contact);
+app.get('/posts/new', newPostController);
+
+
+
+
 
 // post request
 // app.post('/post/new', (req, res)=>{
